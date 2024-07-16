@@ -52,7 +52,7 @@ dash:
   #avatar_source: github
   #github_username: bitbrain
   avatar_source: local
-  avatar_path: /assets/edward.jpg
+  avatar_path: /assets/edward2.jpg
 
 # Build settings
 theme: jekyll-dash
