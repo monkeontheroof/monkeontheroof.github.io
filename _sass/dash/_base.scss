@@ -153,8 +153,8 @@ code {
   @include relative-font-size(0.9375);
   border-radius: 0.3em;
   @include themed() {
-     background-color: $color-background-dark;
-     color: $color-foreground;
+     background-color: $color-custom-two;
+     color: $color-custom-one;
   }
 }
 
