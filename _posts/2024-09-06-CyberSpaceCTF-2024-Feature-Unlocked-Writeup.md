@@ -22,11 +22,11 @@ For this challenge, I thought it was an easy one until I read through the messy 
 We are provided with the following websites: <br>
 The remaining time displayed at `/release` indicates the time left until *`the new feature`* is released: <br>
 
-<kbd><img src=https://github.com/user-attachments/assets/7aedb7fd-e861-4cb6-9b22-069f268f15de></kbd> <br>
+<kbd><img src="https://github.com/user-attachments/assets/7aedb7fd-e861-4cb6-9b22-069f268f15de"></kbd> <br>
 
 The next one is `/feature` with a clickable link that would redirect us back to `/release`, let's find out what's happening behind the scenes!<br> 
 
-<kbd><img src=https://github.com/user-attachments/assets/93517c66-ae5f-4003-a2ab-b8d63b174e21></kbd>
+<kbd><img src="https://github.com/user-attachments/assets/93517c66-ae5f-4003-a2ab-b8d63b174e21"></kbd>
 
 # Source code analysis
 Directory tree:
@@ -57,21 +57,21 @@ Directory tree:
         └── validation.py
 ```
 At the top of `main.py`, we can see that server is using `URLSafeTimedSerializer` with a *random 16 bytes secret* for serialize and deserialize the `access_token`. `DEFAULT_PREFERENCES` cookie and `NEW_FEATURE_RELEASE` date: <br>
-<kbd><img src=https://github.com/user-attachments/assets/391e7bec-ce68-406b-bf4b-42bd28901fb6></kbd>
+<kbd><img src="https://github.com/user-attachments/assets/391e7bec-ce68-406b-bf4b-42bd28901fb6"></kbd>
 
 
 At `main.py`, we got `/release` which would first check if the `access_token` cookie is presented and then only redirect us if the data value is `access_granted`. <br>
 Next, we have an optional GET parameter `debug`. When this value set to true, the system will accept the overidding of validation_server from the `preferences` cookie and perform server validation. If the validation is true, we then will be redirected to `/release` with dumped `access_token` assigned in response header: <br> 
-<kbd><img src=https://github.com/user-attachments/assets/7cb4aa50-4132-472b-985a-93d45cdfc92a></kbd> <br>
+<kbd><img src="https://github.com/user-attachments/assets/7cb4aa50-4132-472b-985a-93d45cdfc92a"></kbd> <br>
 
 After delving into `validate_server`, I saw that it performs another validation through `validate_access()` and return the `date` later than `NEW_FEATURE_RELEASE` date:<br>
-<kbd><img src=https://github.com/user-attachments/assets/2a7fb943-c982-4cdc-afb2-8c3c3f5b339a></kbd> <br>
+<kbd><img src="https://github.com/user-attachments/assets/2a7fb943-c982-4cdc-afb2-8c3c3f5b339a"></kbd> <br>
 
 The `validate_access()` is the last step of validation but this time it just performs token verification using `signature` received from the `validation_server`'s response: <br>
-<kbd><img src=https://github.com/user-attachments/assets/e2f61fdf-b933-46af-93a9-2bb5be578b98></kbd> <br>
+<kbd><img src="https://github.com/user-attachments/assets/e2f61fdf-b933-46af-93a9-2bb5be578b98"></kbd> <br>
 
 A potential OS Command injection found at `/feature` POST method if token deserialization data is `access_granted`, mean that we've got to get the `access_token` cookie to access this hidden feature: <br>
-<kbd><img src=https://github.com/user-attachments/assets/7d2585dd-4dcd-48a0-bc69-ed6505adb56e></kbd>
+<kbd><img src="https://github.com/user-attachments/assets/7d2585dd-4dcd-48a0-bc69-ed6505adb56e"></kbd>
 
 Then I came up with an idea: <br>
 > "What if the `validation_server` value in the `preferences` cookie is the URL of our self-hosted malicious server?"
